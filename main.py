@@ -1,4 +1,4 @@
-from src.smith_waterman import cli_args
+from src.cli import cli_args
 from src.smith_waterman import SmithWaterman
 
 if __name__ == "__main__":
@@ -10,7 +10,7 @@ if __name__ == "__main__":
 
     sequences = []
     file_name = "input.fasta"
-    output_file_name = "output.fasta"
+    output_file_name = "output.txt"
 
     with open(file_name, "r") as file:
         file_data = file.readlines()
@@ -51,9 +51,10 @@ if __name__ == "__main__":
     backtrance_result.reverse()
 
     new_first_sequence, new_second_sequence = algorithm.align(matrix, backtrance_result, first_sequence)
-
     score = matrix[backtrance_result[-1][0]][backtrance_result[-1][1]].value
 
-    print(new_first_sequence)
-    print(new_second_sequence)
-    print(f"Score: {score}")
+    with open(output_file_name, "w") as file:
+        file.write(f"{new_first_sequence}\n")
+        file.write(f"{new_second_sequence}\n")
+        file.write(f"Score={score}\n")
+    print("File `output.txt` with results was saved successful!")
